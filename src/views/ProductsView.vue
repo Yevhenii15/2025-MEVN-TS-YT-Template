@@ -11,7 +11,7 @@
       <!-- Loop through the products -->
       <div
         v-for="product in products"
-        :key="product._id"
+        :key="product.id"
         class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
       >
         <!-- Product card with v-for -->
