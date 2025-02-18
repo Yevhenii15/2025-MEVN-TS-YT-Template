@@ -11,7 +11,8 @@ export const useProducts = () => {
 
     try {
       const response = await fetch(
-        "https://ments-restapi.onrender.com/api/products"
+        /*         "https://ments-restapi.onrender.com/api/products"
+         */ "http://localhost:4000/api/products"
       );
       if (!response.ok) {
         throw new Error("No data available");
