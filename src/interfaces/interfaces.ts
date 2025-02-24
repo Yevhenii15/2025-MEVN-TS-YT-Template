@@ -11,3 +11,11 @@ export interface Product {
   _createdBy: string;
   __v: number;
 }
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  registerDate: string;
+};
