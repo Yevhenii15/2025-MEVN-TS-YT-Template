@@ -12,6 +12,8 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "dotenv-flow": "^4.1.0",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },

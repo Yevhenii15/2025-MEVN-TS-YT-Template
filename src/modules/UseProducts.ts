@@ -10,10 +10,8 @@ export const useProducts = () => {
     loading.value = true;
 
     try {
-      const response = await fetch(
-        /*         "https://ments-restapi.onrender.com/api/products"
-         */ "http://localhost:4000/api/products"
-      );
+      const apiBaseUrl = import.meta.env.VITE_LOCAL_HOST_API;
+      const response = await fetch(`${apiBaseUrl}/products`);
       if (!response.ok) {
         throw new Error("No data available");
       }

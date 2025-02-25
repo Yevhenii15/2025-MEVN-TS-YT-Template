@@ -13,7 +13,9 @@ export const useUsers = () => {
 
   const fetchToken = async (email: string, password: string): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:4000/api/user/login", {
+      const apiBaseUrl = import.meta.env.VITE_LOCAL_HOST_API;
+      console.log("API Base URL:", apiBaseUrl);
+      const response = await fetch(`${apiBaseUrl}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +53,8 @@ export const useUsers = () => {
     password: string
   ): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:4000/api/user/register", {
+      const apiBaseUrl = import.meta.env.VITE_LOCAL_HOST_API;
+      const response = await fetch(`${apiBaseUrl}/user/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
