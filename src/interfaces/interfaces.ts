@@ -1,5 +1,5 @@
 export interface Product {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   imageURL: string;
@@ -9,8 +9,12 @@ export interface Product {
   discountPct: number;
   isHidden: boolean;
   _createdBy: string;
-  __v: number;
 }
+/* export type newProduct = Omit<Product, "_id"> & Partial<Pick<Product, "_createdBy">>;
+ */
+export type newProduct = Omit<Product, "_id"> & {
+  _createdBy?: string;
+};
 
 export type User = {
   id: string;
