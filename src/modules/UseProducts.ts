@@ -121,6 +121,59 @@ export const useProducts = () => {
       error.value = (err as Error).message;
     }
   };
+
+  const updateProductOnServer = async (
+    id: string,
+    updateProduct: Partial<Product>,
+    token: string
+  ): Promise<Product> => {
+    const apiBaseUrl = import.meta.env.VITE_LOCAL_HOST_API;
+    const response = await fetch(`${apiBaseUrl}/products/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token,
+      },
+      body: JSON.stringify(updateProduct),
+    });
+    if (!response.ok) {
+      console.log("error updating product");
+      throw new Error("No data available");
+    }
+
+    const responseText = await response.text();
+
+    try {
+      return JSON.parse(responseText);
+    } catch (err) {
+      return { message: responseText } as unknown as Product;
+    }
+  };
+
+  const updateProductInState = (id: string, updatedProduct: Product) => {
+    const index = products.value.findIndex((product) => product._id === id);
+    if (index !== -1) {
+      products.value[index] = updatedProduct;
+    }
+  };
+
+  const updateProduct = async (
+    id: string,
+    updatedProduct: Partial<Product>
+  ): Promise<void> => {
+    try {
+      const { token } = getTokenAndUserId();
+      const updatedProductResponse = await updateProductOnServer(
+        id,
+        updatedProduct,
+        token
+      );
+      updateProductInState(id, updatedProductResponse);
+      await fetchProducts();
+    } catch (err) {
+      error.value = (err as Error).message;
+    }
+  };
   return {
     error,
     loading,
@@ -129,5 +182,6 @@ export const useProducts = () => {
     addProduct,
     deleteProduct,
     getTokenAndUserId,
+    updateProduct,
   };
 };
