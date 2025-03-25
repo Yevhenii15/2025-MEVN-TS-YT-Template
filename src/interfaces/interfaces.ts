@@ -23,3 +23,11 @@ export type User = {
   password: string;
   registerDate: string;
 };
+
+export type CartItem = {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageURL: string;
+};

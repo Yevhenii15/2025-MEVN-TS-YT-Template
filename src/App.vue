@@ -10,12 +10,14 @@
           >Admin</RouterLink
         >
 
-        <button v-if="isLoggedIn" @click="logout">Logout</button>
+        <button class="mr-3" v-if="isLoggedIn" @click="logout">Logout</button>
         <!-- RouterLink to products, Auth, Admin & and logout button -->
 
         <!-- toggle cart button -->
+        <button @click="toggleCart">Cart</button>
 
         <!-- Routerlink to orders -->
+        <CartBasket v-model:isVisible="isCartVisible" />
       </nav>
     </div>
   </header>
@@ -26,10 +28,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import { useUsers } from "@/modules/auth/UseUsers";
 import { state } from "@/modules/globalStates/state";
+import CartBasket from "./components/cart/CartBasketView.vue";
+
+const isCartVisible = ref(false);
+const toggleCart = () => (isCartVisible.value = !isCartVisible.value);
 
 const { logout } = useUsers();
 const isLoggedIn = computed(() => state.isLoggedin);

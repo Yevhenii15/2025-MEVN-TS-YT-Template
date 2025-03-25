@@ -11,7 +11,7 @@
       <!-- Loop through the products -->
       <div
         v-for="product in products"
-        :key="product.id"
+        :key="product._id"
         class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
       >
         <!-- Product card with v-for -->
@@ -37,6 +37,7 @@
               Product Details
             </button>
             <button
+              @click="addToCart(product)"
               class="bg-green-500 text-white px-1 py-2 rounded hover:bg-green-600"
             >
               Add to Cart
@@ -52,6 +53,9 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useProducts } from "../modules/UseProducts";
+import { useCart } from "../modules/cart/useCart";
+
+const { addToCart } = useCart();
 
 const { loading, error, products, fetchProducts } = useProducts();
 
