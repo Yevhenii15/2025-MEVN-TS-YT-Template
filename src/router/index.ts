@@ -20,6 +20,19 @@ const router = createRouter({
       component: () => import("../views/ProductsView.vue"),
     },
     {
+      path: "/cart",
+      name: "cart",
+      component: () => import("../views/cart/CartView.vue"),
+    },
+    {
+      path: "/orders",
+      name: "orders",
+      component: () => import("../views/orders/OrdersView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: "/auth",
       name: "auth",
       component: () => import("../views/admin/AuthView.vue"),

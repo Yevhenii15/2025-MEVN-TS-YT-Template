@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import type { CartItem } from "../../interfaces/interfaces";
+import { ref, watch } from "vue";
+import type { CartItem, OrderItems } from "../../interfaces/interfaces";
 
 export const useCart = () => {
   const cart = ref<CartItem[]>(
@@ -81,6 +81,48 @@ export const useCart = () => {
     return Number((total - discount).toFixed(2));
   };
 
+  const orders = ref<OrderItems[]>(
+    JSON.parse(localStorage.getItem("orders") || "[]")
+  );
+
+  watch(
+    orders,
+    (newOrders) => {
+      localStorage.setItem("orders", JSON.stringify(newOrders));
+    },
+    { deep: true }
+  );
+
+  const checkOutBuy = () => {
+    const newOrder: OrderItems = {
+      _id: `order${orders.value.length + 1}`,
+      orderDate: new Date().toISOString(),
+      total: cartTotal(),
+      orderStatus: "Processing",
+      ordernumber: orders.value.length + 1,
+      userName: "User",
+      orderLine: cart.value.map((item) => ({
+        product: {
+          _id: item._id,
+          name: item.name,
+          description: "",
+          price: item.price,
+          imageURL: item.imageURL,
+          stock: 0,
+          isOnDiscount: false,
+          discountPct: 0,
+          isHidden: false,
+          _createdBy: "",
+        },
+        quantity: item.quantity,
+      })),
+    };
+    orders.value.push(newOrder);
+    cart.value = [];
+    localStorage.setItem("cart", JSON.stringify(cart.value));
+    console.log("Order created", orders.value);
+    localStorage.setItem("orders", JSON.stringify(orders.value));
+  };
   return {
     cart,
     addToCart,
@@ -91,5 +133,7 @@ export const useCart = () => {
     salesTax,
     code,
     grandTotal,
+    orders,
+    checkOutBuy,
   };
 };

@@ -18,6 +18,9 @@
 
         <!-- Routerlink to orders -->
         <CartBasket v-model:isVisible="isCartVisible" />
+        <RouterLink v-if="isLoggedIn" to="/orders" class="mr-4"
+          >Orders</RouterLink
+        >
       </nav>
     </div>
   </header>
